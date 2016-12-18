@@ -35,3 +35,19 @@ define( 'CMPS', 		'cpm-slack' );						// Название плагина и те
 define( 'CMPS_PATH', 	plugin_dir_path( __FILE__ ) );		// Путь к папке плагина
 define( 'CMPS_URL', 	plugin_dir_url( __FILE__ ) );		// URL к папке плагина
 
+// Инициализация плагина
+add_action( 'init', 'cmps_init' );
+function cmps_init() 
+{
+	// Локализация плагина
+	load_plugin_textdomain( CMPS, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );		
+		
+	// Классы плагина
+	require( CMPS_PATH . 'classes/settings.php' );
+	require( CMPS_PATH . 'classes/slack.php' );
+	require( CMPS_PATH . 'classes/plugin.php' );
+
+		
+	// Инициализация плагина
+	new CMPS\Plugin( CMPS_PATH, CMPS_URL );	
+}

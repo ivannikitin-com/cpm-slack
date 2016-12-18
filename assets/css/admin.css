@@ -1,0 +1,27 @@
+/**
+ * Admin settings page CSS
+ */
+#cmps-settings .cmps-field
+{
+	clear: both;
+	margin-bottom: 2em;
+} 
+#cmps-settings label
+{
+	display: inline-block;
+	width: 150px;
+	float: left;	
+}
+#cmps-settings .cmps-input
+{
+	margin-left: 160px;
+}
+#cmps-settings .cmps-input input[type=text]
+{
+	width: 80%;
+}
+
+#cmps-settings .cmps-input p
+{
+	margin: 2px;
+}
