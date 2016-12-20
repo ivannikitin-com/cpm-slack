@@ -2,7 +2,7 @@
 /**
  * Класс реализует шорткоды плагина
  */
-namespace CMPS;
+namespace CPMS;
 class Slack
 {
 	/**
@@ -111,7 +111,7 @@ class Slack
 
         if ( is_wp_error( $posting_to_slack ) ) 
 		{
-            echo sprintf(__('Error Found: %s', CMPS ), $posting_to_slack->get_error_message());
+            echo sprintf(__('Error Found: %s', CPMS ), $posting_to_slack->get_error_message());
 			return false;
         } 
 		else 
@@ -120,7 +120,7 @@ class Slack
             $message = wp_remote_retrieve_body( $posting_to_slack );
             if ( $status !== 200) 
 			{
-                return new WP_Error( __('Unexpected_response', CMPS ), $message );
+                return new WP_Error( __('Unexpected_response', CPMS ), $message );
             }
         }
 		return true;

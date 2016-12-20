@@ -1,27 +1,27 @@
 /**
  * Admin settings page CSS
  */
-#cmps-settings .cmps-field
+#cpms-settings .cpms-field
 {
 	clear: both;
 	margin-bottom: 2em;
 } 
-#cmps-settings label
+#cpms-settings label
 {
 	display: inline-block;
 	width: 150px;
 	float: left;	
 }
-#cmps-settings .cmps-input
+#cpms-settings .cpms-input
 {
 	margin-left: 160px;
 }
-#cmps-settings .cmps-input input[type=text]
+#cpms-settings .cpms-input input[type=text]
 {
 	width: 80%;
 }
 
-#cmps-settings .cmps-input p
+#cpms-settings .cpms-input p
 {
 	margin: 2px;
 }

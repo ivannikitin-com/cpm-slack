@@ -2,7 +2,7 @@
 /**
  * Класс реализует основной функционал плагина
  */
-namespace CMPS;
+namespace CPMS;
 class Plugin
 {
 	/**
@@ -19,13 +19,13 @@ class Plugin
 	
 	/**
 	 * Параметры плагина
-	 * @var CMPS\Settings
+	 * @var CPMS\Settings
 	 */
 	public $settings;
 	
 	/**
 	 * Объект Slack
-	 * @var CMPS\Slack
+	 * @var CPMS\Slack
 	 */
 	public $slack;	
 
@@ -37,7 +37,7 @@ class Plugin
 	{
 		$this->path = $pluginPath;						// Путь к файлам плагина
 		$this->url = $pluginURL;						// URL к файлам плагина
-		$this->settings = new Settings( CMPS, $this );	// Инициализируем параметры
+		$this->settings = new Settings( CPMS, $this );	// Инициализируем параметры
 		$this->slack 	= new Slack( $this ); 			// Инициализируем Slack
 		
 	}
