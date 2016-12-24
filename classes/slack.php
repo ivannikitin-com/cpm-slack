@@ -1,6 +1,6 @@
 <?php
 /**
- * Класс реализует шорткоды плагина
+ * Класс реализует взаимодействие со Slack
  */
 namespace CPMS;
 class Slack
@@ -76,23 +76,26 @@ class Slack
 	}
 	
 	/**
-	 * Отправка сообщения
+	 * Send message to Slack
 	 *
-	 * @param string 	$message		Текст сообщения
-	 * @param string 	$iconEmoji		Иконка сообщения
+	 * @param string 	$message		Message content
+	 * @param string 	$iconEmoji		Message icon
+	 * @param string 	$userName		Message user
 	 */	
-    function send($message, $iconEmoji = ':rocket:') 
+    function send($message, $iconEmoji = ':rocket:', $userName = '') 
 	{
 
         if ( empty( $this->serviceURL ) || empty( $this->channel ) || empty( $this->userName ) )
 			return false;
 		
+		$user = ( empty( $userName ) ) ? $this->userName : $userName;	
+		
         $data = array(
             'payload' => json_encode( array(
-				 "channel"    => $this->channel,
-				 "text"       => $message,
-				 "username"   => $this->userName,
-				 "icon_emoji" => $icon_emoji
+				 'channel'    => $this->channel,
+				 'text'       => $message,
+				 'username'   => $user,
+				 'icon_emoji' => $iconEmoji
 			 )
             )
         );

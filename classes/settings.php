@@ -149,7 +149,13 @@ class Settings
 				$this->set( Slack::SEVICE_URL_PARAM, 	sanitize_text_field( $_POST['cpmsServiceURL'] ) );
 				$this->set( Slack::CHANNEL_PARAM, 		sanitize_text_field( $_POST['cpmsChannel'] ) );
 				$this->set( Slack::USERNAME_PARAM, 		sanitize_text_field( $_POST['cpmsUserName'] ) );
-				$this->save();
+				
+				// Event modules save settings
+				foreach( $this->plugin->events as $event )
+					$event->saveSettings();	
+
+				// Save all data
+				$this->save();					
 				
 				if ( isset( $_POST['test'] ) )
 				{
@@ -205,19 +211,12 @@ class Settings
 	
 	<hr>
 	
-	<h2><?php esc_html_e( 'New item', CPMS ) ?></h2>
-	<p><?php esc_html_e( 'This settings are apply for all new items.', CPMS ) ?></p>
+	<?php 
+		// Вывод модулей
+		foreach( $this->plugin->events as $event )
+			$event->renderSettings();
+	?>
 	
-	<div class="cpms-field">
-		<label for="cpmsNewItem"><?php esc_html_e( 'Message', CPMS ) ?></label>
-		<div class="cpms-input">
-			<input id="cpmsNewItem" name="cpmsNewItem" type="text" value="<?php echo esc_attr( $this->get( Slack::USERNAME_PARAM ) ) ?>" />
-			<p><?php esc_html_e( 'Specify the Username (Bot name).', CPMS ); 
-			echo ' ';
-			_e( 'Please note, no data sends to Slack if this field is blank.', CPMS );
-			?></p>
-		</div>
-	</div>	
 	
 	
 	<?php submit_button() ?>

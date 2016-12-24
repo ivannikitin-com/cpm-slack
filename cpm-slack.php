@@ -45,6 +45,11 @@ function cpms_init()
 	// Классы плагина
 	require( CPMS_PATH . 'classes/settings.php' );
 	require( CPMS_PATH . 'classes/slack.php' );
+	require( CPMS_PATH . 'classes/event.php' );
+	require( CPMS_PATH . 'classes/event-new-project.php' );
+	require( CPMS_PATH . 'classes/event-new-task.php' );
+	require( CPMS_PATH . 'classes/event-new-comment.php' );
+	require( CPMS_PATH . 'classes/event-complete-task.php' );
 	require( CPMS_PATH . 'classes/plugin.php' );
 
 		

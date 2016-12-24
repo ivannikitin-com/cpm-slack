@@ -28,6 +28,12 @@ class Plugin
 	 * @var CPMS\Slack
 	 */
 	public $slack;	
+	
+	/**
+	 * Модули событий
+	 * @var mixed
+	 */
+	public $events;	
 
 	/**
 	 * Конструктор
@@ -39,6 +45,14 @@ class Plugin
 		$this->url = $pluginURL;						// URL к файлам плагина
 		$this->settings = new Settings( CPMS, $this );	// Инициализируем параметры
 		$this->slack 	= new Slack( $this ); 			// Инициализируем Slack
+		
+		// Инициализируем модули
+		$this->events = array(
+			new EventNewProject( $this ),				// New project
+			new EventNewTask( $this ),					// New task
+			new EventNewComment( $this ),				// New comment
+			new EventCompleteTask( $this ),				// Complete task
+		);
 		
 	}
 	

@@ -16,9 +16,15 @@
 {
 	margin-left: 160px;
 }
-#cpms-settings .cpms-input input[type=text]
+#cpms-settings .cpms-input input[type=text],
+#cpms-settings .cpms-input textarea
 {
 	width: 80%;
+}
+
+#cpms-settings .cpms-input textarea
+{
+	height: 6em;
 }
 
 #cpms-settings .cpms-input p
