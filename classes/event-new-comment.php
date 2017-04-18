@@ -70,7 +70,8 @@ class EventNewComment extends Event
 				'%comment_author_email%'	=> $commentdata['comment_author'],				
 			),
 			$this->icon,
-			$this->getUserName( $commentdata['user_id'] )
+			$this->getUserName( $commentdata['user_id'] ),
+			$post	// Project ID
 		);
 	}
 }

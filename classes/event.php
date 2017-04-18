@@ -113,11 +113,12 @@ abstract class Event
 	/**
 	 * Send event to Slack
 	 *
-	 * @param mixed 		$details	Assoc array with event data
-	 * @param mixed 		$icon		The message icon. If empty we use the default for this module
-	 * @param mixed 		$userName		The message user. If empty we use the default value from settings
+	 * @param mixed 	$details	Assoc array with event data
+	 * @param string 	$icon		The message icon. If empty we use the default for this module
+	 * @param string 	$userName	The message user. If empty we use the default value from settings
+	 * @param int 		$projectId	Current project Id
 	 */
-	public function send( $details, $icon = '', $userName = '' )
+	public function send( $details, $icon = '', $userName = '', $projectId = 0 )
 	{
 		// Prepare message
 		$message 	= $this->prepare( $details );
@@ -125,7 +126,7 @@ abstract class Event
 	
 		// Отправляем событие
 		if ( ! empty( $message ) ) 
-			return $this->plugin->slack->send( $message, $icon, $userName );
+			return $this->plugin->slack->send( $message, $icon, $userName, $projectId );
 		else
 			return false;
 	}

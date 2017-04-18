@@ -60,7 +60,8 @@ class EventCompleteTask extends Event
 				'%task%'			=> $task->post_title,
 			),
 			$this->icon,
-			$this->getUserName( $commentdata['user_id'] )
+			$this->getUserName( $commentdata['user_id'] ),
+			$project->ID
 		);
 	}	
 }

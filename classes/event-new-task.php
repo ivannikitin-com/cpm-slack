@@ -57,6 +57,9 @@ class EventNewTask extends Event
 			'$task_id: ' . var_export( $task_id, true ) . PHP_EOL . PHP_EOL . 
 			'$data: ' . var_export($data, true) );
 		*/
+		
+		$projectId = wp_get_post_parent_id( $list_id );
+		
 		$this->send( 
 			
 			array(
@@ -67,7 +70,8 @@ class EventNewTask extends Event
 				'%content%'			=> $data['post_content'],
 			),
 			$this->icon,
-			$this->getUserName( $commentdata['user_id'] )
+			$this->getUserName( $commentdata['user_id'] ),
+			$projectId
 		);
 	}
 	

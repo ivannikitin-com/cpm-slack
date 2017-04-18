@@ -49,6 +49,9 @@ class Settings
 			// Страница настроек
 			add_action( 'admin_menu', array( $this, 'addSettingsPage' ) );
 		}
+		
+		// Другие обработчики
+		add_action( 'cpm_project_settings', array( $this, 'showProjectSettings' ) );
 	}
 	
 	/**
@@ -223,4 +226,60 @@ class Settings
 </form>
 <?php	
 	}
+	
+	/** 
+	 * Show Slack settings at project settings page
+	 */
+	public function showProjectSettings( )
+	{
+		// Get the Project ID
+		$projectId = 0;
+		if ( isset ( $_GET['pid'] ) )				// Admin project settings page
+		{
+			$projectId = sanitize_text_field( $_GET['pid'] );
+		}
+		elseif ( isset ( $_GET['project_id'] ) )	// Frontend project settings page	
+		{
+			$projectId = sanitize_text_field( $_GET['project_id'] );
+		}
+		else
+		{
+			return;									// We don't know project ID!
+		}
+		
+		// All project settings
+		$channels = $this->get( Slack::PROJECT_CHANNELS_PARAM );
+		
+		// Current project channel
+		$projectChannel = ( $channels && isset( $channels[$projectId] ) ) ? $channels[$projectId] : '';
+		
+		// Save project channel settings
+		if ( isset( $_POST['projectChannel'] ) )
+		{
+			$projectChannel = sanitize_text_field( $_POST['projectChannel'] );
+			$channels[$projectId] = $projectChannel;
+			$this->set( Slack::PROJECT_CHANNELS_PARAM, $channels );
+			$this->save();
+		}
+		
+		
+	?>
+	<h3><?php esc_html_e( 'Slack Integration Settings', CPMS ) ?></h3>
+	
+	<div class="cpms-field">
+		<label for="projectChannel"><?php esc_html_e( 'Project channel', CPMS ) ?></label>
+		<div class="cpms-input">
+			<input id="projectChannel" name="projectChannel" type="text" value="<?php echo esc_attr( $projectChannel ) ?>" />
+			<p><?php esc_html_e( 'Specify the Slack channel for this project.', CPMS ); 
+			echo ' ';
+			_e( 'If empty, all messages will send to default channel specified on Slack integrations settings page.', CPMS );
+			?></p>
+		</div>
+	</div>		
+	
+	
+<?php 	
+		
+	}		
+	
 }

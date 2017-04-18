@@ -21,13 +21,20 @@ class Slack
 	 * Параметр настроек Сервисный URL
 	 * @var string
 	 */
-	const SEVICE_URL_PARAM = 'sevice_url';	
+	const SEVICE_URL_PARAM = 'sevice_url';
 	
 	/**
-	 * Канал Slack
+	 * Default Slack channel
 	 * @var string
 	 */
 	protected $channel;	
+	
+	/**
+	 * Project channels
+	 * @var mixed
+	 */
+	protected $projectChannels;		
+	
 	
 	/**
 	 * Параметр настроек Канал Slack
@@ -39,7 +46,14 @@ class Slack
 	 * Канал Slack значение по умолчанию
 	 * @var string
 	 */
-	const CHANNEL_PARAM_DEFAULT = 'CMP';	
+	const CHANNEL_PARAM_DEFAULT = 'CMP';
+
+	/**
+	 * Канал Slack значение по умолчанию
+	 * @var string
+	 */
+	const PROJECT_CHANNELS_PARAM = 'project_channels';	
+	
 	
 	/**
 	 * Пользователь Slack
@@ -70,9 +84,11 @@ class Slack
 		$this->plugin = $plugin;
 		
 		// Читаем настройки
-		$this->serviceURL 	= $this->plugin->settings->get( self::SEVICE_URL_PARAM );
-		$this->channel 		= $this->plugin->settings->get( self::CHANNEL_PARAM, self::CHANNEL_PARAM_DEFAULT );
-		$this->userName		= $this->plugin->settings->get( self::USERNAME_PARAM, self::USERNAME_PARAM_DEFAULT );
+		$this->serviceURL 		= $this->plugin->settings->get( self::SEVICE_URL_PARAM );
+		$this->channel 			= $this->plugin->settings->get( self::CHANNEL_PARAM, self::CHANNEL_PARAM_DEFAULT );
+		$this->userName			= $this->plugin->settings->get( self::USERNAME_PARAM, self::USERNAME_PARAM_DEFAULT );
+		$this->projectChannels	= $this->plugin->settings->get( self::PROJECT_CHANNELS_PARAM, array() );
+		
 	}
 	
 	/**
@@ -81,18 +97,23 @@ class Slack
 	 * @param string 	$message		Message content
 	 * @param string 	$iconEmoji		Message icon
 	 * @param string 	$userName		Message user
+	 * @param int 		$projectId		Current project Id
 	 */	
-    function send($message, $iconEmoji = ':rocket:', $userName = '') 
+    function send($message, $iconEmoji = ':rocket:', $userName = '', $projectId = 0) 
 	{
 
         if ( empty( $this->serviceURL ) || empty( $this->channel ) || empty( $this->userName ) )
 			return false;
 		
-		$user = ( empty( $userName ) ) ? $this->userName : $userName;	
+		$user = ( empty( $userName ) ) ? $this->userName : $userName;
+	
+		// Channel
+		$channel = ( isset( $this->projectChannels[$projectId] ) ) ? $this->projectChannels[$projectId] : $this->channel;
 		
+		// Data
         $data = array(
             'payload' => json_encode( array(
-				 'channel'    => $this->channel,
+				 'channel'    => $channel,
 				 'text'       => $message,
 				 'username'   => $user,
 				 'icon_emoji' => $iconEmoji
