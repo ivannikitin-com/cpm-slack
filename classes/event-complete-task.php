@@ -33,8 +33,11 @@ class EventCompleteTask extends Event
 		$this->description 	= __( 'You can use this codes:', CPMS ) . '<ul>' . 
 			'<li>' . __( '%user% - User name', CPMS ) . '</li>' . 
 			'<li>' . __( '%project% - The project title', CPMS ) . '</li>' . 
+			'<li>' . __( '%project_id% - The project ID', CPMS ) . '</li>' . 
 			'<li>' . __( '%list% - The task list', CPMS ) . '</li>' . 			
+			'<li>' . __( '%list_id% - The task list ID', CPMS ) . '</li>' . 			
 			'<li>' . __( '%task% - The task title', CPMS ) . '</li>' . 
+			'<li>' . __( '%task_id% - The task ID', CPMS ) . '</li>' . 
 			'</ul> ' . 
 			__( 'and ANY shortcodes', CPMS );
 	}	
@@ -56,8 +59,11 @@ class EventCompleteTask extends Event
 			array(
 				'%user%'			=> $this->getUserName( get_current_user_id() ),
 				'%project%'			=> $project->post_title,				
-				'%list%'			=> $list->post_title,				
+				'%project_id%'		=> $project->ID,				
+				'%list%'			=> $list->post_title,			
+				'%list_id%'			=> $list->ID,			
 				'%task%'			=> $task->post_title,
+				'%task_id%'			=> $task_id,
 			),
 			$this->icon,
 			$this->getUserName( $commentdata['user_id'] ),

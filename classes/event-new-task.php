@@ -33,8 +33,11 @@ class EventNewTask extends Event
 		$this->description 	= __( 'You can use this codes:', CPMS ) . '<ul>' . 
 			'<li>' . __( '%user% - User name', CPMS ) . '</li>' . 
 			'<li>' . __( '%project% - The project title', CPMS ) . '</li>' . 
+			'<li>' . __( '%project_id% - The project ID', CPMS ) . '</li>' . 
 			'<li>' . __( '%list% - The task list', CPMS ) . '</li>' . 			
+			'<li>' . __( '%list_id% - The task list ID', CPMS ) . '</li>' . 			
 			'<li>' . __( '%task% - The task title', CPMS ) . '</li>' . 
+			'<li>' . __( '%task_id% - The task ID', CPMS ) . '</li>' . 
 			'<li>' . __( '%content% - The comment content', CPMS ) . '</li>' . 
 			'</ul> ' . 
 			__( 'and ANY shortcodes', CPMS );
@@ -64,9 +67,12 @@ class EventNewTask extends Event
 			
 			array(
 				'%user%'			=> $this->getUserName( get_current_user_id() ),
-				'%project%'			=> $this->getParentPostTitle( $list_id ),				
+				'%project%'			=> $this->getParentPostTitle( $list_id ),			
+				'%project_id%'		=> $this->getParentPostId( $list_id ),			
 				'%list%'			=> $this->getPostTitle( $list_id ),				
+				'%list_id%'			=> $list_id,				
 				'%task%'			=> $data['post_title'],
+				'%task_id%'			=> $task_id,
 				'%content%'			=> $data['post_content'],
 			),
 			$this->icon,

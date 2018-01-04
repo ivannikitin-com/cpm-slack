@@ -33,8 +33,11 @@ class EventNewComment extends Event
 		$this->description 	= __( 'You can use this codes:', CPMS ) . '<ul>' . 
 			'<li>' . __( '%user% - User name', CPMS ) . '</li>' . 
 			'<li>' . __( '%project% - The project title', CPMS ) . '</li>' .
+			'<li>' . __( '%project_id% - The project ID', CPMS ) . '</li>' .
 			'<li>' . __( '%list% - The task list', CPMS ) . '</li>' . 			
+			'<li>' . __( '%list_id% - The task list ID', CPMS ) . '</li>' . 			
 			'<li>' . __( '%task% - The task title', CPMS ) . '</li>' . 
+			'<li>' . __( '%task_id% - The task ID', CPMS ) . '</li>' . 
 			'<li>' . __( '%content% - The comment content', CPMS ) . '</li>' . 
 			'<li>' . __( '%comment_author% - The comment author', CPMS ) . '</li>' . 
 			'<li>' . __( '%comment_author_email% - The comment author E-mail', CPMS ) . '</li>' . 
@@ -53,6 +56,7 @@ class EventNewComment extends Event
 	 */
 	public function cpm_comment_new( $comment_id, $post, $commentdata )
 	{	
+		
 		/*
 		file_put_contents( CPMS_PATH . $this->id . '.log', 
 			var_export($post, true) . PHP_EOL . PHP_EOL . 
@@ -63,8 +67,11 @@ class EventNewComment extends Event
 			array(
 				'%user%'					=> $this->getUserName( $commentdata['user_id'] ),
 				'%project%'					=> $this->getPostTitle( $post ),
+				'%project_id%'				=> $post,
 				'%list%'					=> $this->getParentPostTitle( $commentdata['comment_post_ID'] ),
-				'%task%'					=> $this->getPostTitle( $commentdata['comment_post_ID'] ),				
+				'%list_id%'					=> $this->getParentPostId( $commentdata['comment_post_ID'] ),
+				'%task%'					=> $this->getPostTitle( $commentdata['comment_post_ID'] ),	
+				'%task_id%'					=> $commentdata['comment_post_ID'],	
 				'%content%'					=> $commentdata['comment_content'],
 				'%comment_author%'			=> $commentdata['comment_agent'],
 				'%comment_author_email%'	=> $commentdata['comment_author'],				

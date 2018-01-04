@@ -92,19 +92,23 @@ abstract class Event
 		// The message template
 		$message = $this->message;
 		
-		// Replace all values
-		foreach ($details as $code => $content)
-			$message = str_replace( $code, $content, $message );
-		
 		// Do all shortcodes
 		$message = do_shortcode( $message );
-		
-		// Some formatting
-		$message = str_replace( array('</div>', '</p>', '</li>', '<br>', '<br/>'), "\n", $message );
-		$message = str_replace( '&nbsp;', ' ', $message );
-		
-		// Remove HTML		
-		$message = strip_tags( $message );	
+
+		// Replace all values
+		foreach ($details as $code => $content)
+		{
+			if ( $code == '%content%' )
+			{
+				// Some formatting
+				$content = str_replace( array('</div>', '</p>', '</li>', '<br>', '<br/>'), "\n", $content );
+				$content = str_replace( '&nbsp;', ' ', $content );
+				// Remove HTML		
+				$content = strip_tags( $content );
+			}
+			
+			$message = str_replace( $code, $content, $message );
+		}	
 		
 		// That's all
 		return $message;
@@ -169,7 +173,8 @@ abstract class Event
 	public function saveSettings()
 	{ 
 		$icon = sanitize_text_field( $_POST[ $this->iconProperty ] );
-		$message = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST[ $this->messageProperty ] ) ) );
+		//$message = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST[ $this->messageProperty ] ) ) );
+		$message = implode( "\n", array_map( 'trim', explode( "\n", $_POST[ $this->messageProperty ] ) ) );
 		
 		// Set settings
 		$this->plugin->settings->set( $this->iconProperty, $icon );
@@ -204,12 +209,25 @@ abstract class Event
 	/**
 	 * Returns the paretn post title 
 	 *
-	 * @param int 	$userId		User ID	 
+	 * @param int 	$postId		Post ID	 
 	 */
 	public function getParentPostTitle( $postId )
 	{
 		$post = get_post( $postId );
 		$parentPost = get_post( $post->post_parent );
 		return $parentPost->post_title;
-	}	
+	}
+	
+	/**
+	 * Returns the paretn post ID 
+	 *
+	 * @param int 	$postId		Post ID	 
+	 */	
+	public function getParentPostId( $postId )
+	{
+		$post = get_post( $postId );
+		$parentPost = get_post( $post->post_parent );
+		return $parentPost->ID;
+	}
+	
 }
