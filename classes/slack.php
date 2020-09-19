@@ -144,7 +144,7 @@ class Slack
             $message = wp_remote_retrieve_body( $posting_to_slack );
             if ( $status !== 200) 
 			{
-                return new WP_Error( __('Unexpected_response', CPMS ), $message );
+                return new \WP_Error( __('Unexpected_response', CPMS ), $message );
             }
         }
 		return true;
